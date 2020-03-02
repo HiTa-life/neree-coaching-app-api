@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserActionPlanCreation{% endblock %}
+
+{% block body %}
+    <h1>UserActionPlanCreation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user_action_plan_creation.id }}</td>
+            </tr>
+            <tr>
+                <th>Num</th>
+                <td>{{ user_action_plan_creation.num }}</td>
+            </tr>
+            <tr>
+                <th>Title_action</th>
+                <td>{{ user_action_plan_creation.titleAction }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ user_action_plan_creation.description }}</td>
+            </tr>
+            <tr>
+                <th>Positive_objective</th>
+                <td>{{ user_action_plan_creation.positiveObjective }}</td>
+            </tr>
+            <tr>
+                <th>Beginning_date</th>
+                <td>{{ user_action_plan_creation.beginningDate ? user_action_plan_creation.beginningDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>End_date</th>
+                <td>{{ user_action_plan_creation.endDate ? user_action_plan_creation.endDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Efficience_action</th>
+                <td>{{ user_action_plan_creation.efficienceAction }}</td>
+            </tr>
+            <tr>
+                <th>Expected_result</th>
+                <td>{{ user_action_plan_creation.expectedResult }}</td>
+            </tr>
+            <tr>
+                <th>Specific_action</th>
+                <td>{{ user_action_plan_creation.specificAction ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Mesurable_action</th>
+                <td>{{ user_action_plan_creation.mesurableAction ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Motivating_action</th>
+                <td>{{ user_action_plan_creation.motivatingAction ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Ecological_action</th>
+                <td>{{ user_action_plan_creation.ecologicalAction ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Positive_action</th>
+                <td>{{ user_action_plan_creation.positiveAction ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Realizable_action</th>
+                <td>{{ user_action_plan_creation.realizableAction ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Internal_resources</th>
+                <td>{{ user_action_plan_creation.internalResources }}</td>
+            </tr>
+            <tr>
+                <th>External_resources</th>
+                <td>{{ user_action_plan_creation.externalResources }}</td>
+            </tr>
+            <tr>
+                <th>Obstacles</th>
+                <td>{{ user_action_plan_creation.obstacles }}</td>
+            </tr>
+            <tr>
+                <th>Deflect_obstacles</th>
+                <td>{{ user_action_plan_creation.deflectObstacles }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_action_plan_creation_index') }}">back to list</a>
+
+    <a href="{{ path('user_action_plan_creation_edit', {'id': user_action_plan_creation.id}) }}">edit</a>
+
+    {{ include('user_action_plan_creation/_delete_form.html.twig') }}
+{% endblock %}

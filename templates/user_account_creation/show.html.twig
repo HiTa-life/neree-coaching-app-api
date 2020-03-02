@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserAccountCreation{% endblock %}
+
+{% block body %}
+    <h1>UserAccountCreation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user_account_creation.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ user_account_creation.name }}</td>
+            </tr>
+            <tr>
+                <th>Surname</th>
+                <td>{{ user_account_creation.surname }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ user_account_creation.phone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user_account_creation.email }}</td>
+            </tr>
+            <tr>
+                <th>Function</th>
+                <td>{{ user_account_creation.function }}</td>
+            </tr>
+            <tr>
+                <th>Name_society</th>
+                <td>{{ user_account_creation.nameSociety }}</td>
+            </tr>
+            <tr>
+                <th>Address_society</th>
+                <td>{{ user_account_creation.addressSociety }}</td>
+            </tr>
+            <tr>
+                <th>Phone_society</th>
+                <td>{{ user_account_creation.phoneSociety }}</td>
+            </tr>
+            <tr>
+                <th>Coach_name</th>
+                <td>{{ user_account_creation.coachName }}</td>
+            </tr>
+            <tr>
+                <th>Coaching_beginning</th>
+                <td>{{ user_account_creation.coachingBeginning ? user_account_creation.coachingBeginning|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ user_account_creation.password }}</td>
+            </tr>
+            <tr>
+                <th>Confirm_password</th>
+                <td>{{ user_account_creation.confirmPassword }}</td>
+            </tr>
+            <tr>
+                <th>Accept_terms</th>
+                <td>{{ user_account_creation.acceptTerms ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_account_creation_index') }}">back to list</a>
+
+    <a href="{{ path('user_account_creation_edit', {'id': user_account_creation.id}) }}">edit</a>
+
+    {{ include('user_account_creation/_delete_form.html.twig') }}
+{% endblock %}

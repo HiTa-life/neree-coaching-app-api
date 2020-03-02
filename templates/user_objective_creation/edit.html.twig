@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit UserObjectiveCreation{% endblock %}
+
+{% block body %}
+    <h1>Edit UserObjectiveCreation</h1>
+
+    {{ include('user_objective_creation/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('user_objective_creation_index') }}">back to list</a>
+
+    {{ include('user_objective_creation/_delete_form.html.twig') }}
+{% endblock %}

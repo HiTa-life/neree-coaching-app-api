@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserActionPlanCreation index{% endblock %}
+
+{% block body %}
+    <h1>UserActionPlanCreation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Num</th>
+                <th>Title_action</th>
+                <th>Description</th>
+                <th>Positive_objective</th>
+                <th>Beginning_date</th>
+                <th>End_date</th>
+                <th>Efficience_action</th>
+                <th>Expected_result</th>
+                <th>Specific_action</th>
+                <th>Mesurable_action</th>
+                <th>Motivating_action</th>
+                <th>Ecological_action</th>
+                <th>Positive_action</th>
+                <th>Realizable_action</th>
+                <th>Internal_resources</th>
+                <th>External_resources</th>
+                <th>Obstacles</th>
+                <th>Deflect_obstacles</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user_action_plan_creation in user_action_plan_creations %}
+            <tr>
+                <td>{{ user_action_plan_creation.id }}</td>
+                <td>{{ user_action_plan_creation.num }}</td>
+                <td>{{ user_action_plan_creation.titleAction }}</td>
+                <td>{{ user_action_plan_creation.description }}</td>
+                <td>{{ user_action_plan_creation.positiveObjective }}</td>
+                <td>{{ user_action_plan_creation.beginningDate ? user_action_plan_creation.beginningDate|date('Y-m-d') : '' }}</td>
+                <td>{{ user_action_plan_creation.endDate ? user_action_plan_creation.endDate|date('Y-m-d') : '' }}</td>
+                <td>{{ user_action_plan_creation.efficienceAction }}</td>
+                <td>{{ user_action_plan_creation.expectedResult }}</td>
+                <td>{{ user_action_plan_creation.specificAction ? 'Yes' : 'No' }}</td>
+                <td>{{ user_action_plan_creation.mesurableAction ? 'Yes' : 'No' }}</td>
+                <td>{{ user_action_plan_creation.motivatingAction ? 'Yes' : 'No' }}</td>
+                <td>{{ user_action_plan_creation.ecologicalAction ? 'Yes' : 'No' }}</td>
+                <td>{{ user_action_plan_creation.positiveAction ? 'Yes' : 'No' }}</td>
+                <td>{{ user_action_plan_creation.realizableAction ? 'Yes' : 'No' }}</td>
+                <td>{{ user_action_plan_creation.internalResources }}</td>
+                <td>{{ user_action_plan_creation.externalResources }}</td>
+                <td>{{ user_action_plan_creation.obstacles }}</td>
+                <td>{{ user_action_plan_creation.deflectObstacles }}</td>
+                <td>
+                    <a href="{{ path('user_action_plan_creation_show', {'id': user_action_plan_creation.id}) }}">show</a>
+                    <a href="{{ path('user_action_plan_creation_edit', {'id': user_action_plan_creation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="20">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_action_plan_creation_new') }}">Create new</a>
+{% endblock %}

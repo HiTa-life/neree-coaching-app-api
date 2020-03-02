@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserEnergyValuesCreation{% endblock %}
+
+{% block body %}
+    <h1>UserEnergyValuesCreation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user_energy_values_creation.id }}</td>
+            </tr>
+            <tr>
+                <th>Strength_name</th>
+                <td>{{ user_energy_values_creation.strengthName }}</td>
+            </tr>
+            <tr>
+                <th>Actually_notation</th>
+                <td>{{ user_energy_values_creation.actuallyNotation }}</td>
+            </tr>
+            <tr>
+                <th>Expected_notation</th>
+                <td>{{ user_energy_values_creation.expectedNotation }}</td>
+            </tr>
+            <tr>
+                <th>Action_one</th>
+                <td>{{ user_energy_values_creation.actionOne }}</td>
+            </tr>
+            <tr>
+                <th>Action_two</th>
+                <td>{{ user_energy_values_creation.actionTwo }}</td>
+            </tr>
+            <tr>
+                <th>Action_three</th>
+                <td>{{ user_energy_values_creation.actionThree }}</td>
+            </tr>
+            <tr>
+                <th>Action_four</th>
+                <td>{{ user_energy_values_creation.actionFour }}</td>
+            </tr>
+            <tr>
+                <th>Action_five</th>
+                <td>{{ user_energy_values_creation.actionFive }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_energy_values_creation_index') }}">back to list</a>
+
+    <a href="{{ path('user_energy_values_creation_edit', {'id': user_energy_values_creation.id}) }}">edit</a>
+
+    {{ include('user_energy_values_creation/_delete_form.html.twig') }}
+{% endblock %}

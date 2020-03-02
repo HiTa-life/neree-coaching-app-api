@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserObjectiveCreation index{% endblock %}
+
+{% block body %}
+    <h1>UserObjectiveCreation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Num_objective</th>
+                <th>Objective_title</th>
+                <th>Description_objective</th>
+                <th>Beginning_date</th>
+                <th>End_date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user_objective_creation in user_objective_creations %}
+            <tr>
+                <td>{{ user_objective_creation.id }}</td>
+                <td>{{ user_objective_creation.numObjective }}</td>
+                <td>{{ user_objective_creation.objectiveTitle }}</td>
+                <td>{{ user_objective_creation.descriptionObjective }}</td>
+                <td>{{ user_objective_creation.beginningDate ? user_objective_creation.beginningDate|date('Y-m-d') : '' }}</td>
+                <td>{{ user_objective_creation.endDate ? user_objective_creation.endDate|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('user_objective_creation_show', {'id': user_objective_creation.id}) }}">show</a>
+                    <a href="{{ path('user_objective_creation_edit', {'id': user_objective_creation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_objective_creation_new') }}">Create new</a>
+{% endblock %}

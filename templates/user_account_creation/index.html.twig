@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserAccountCreation index{% endblock %}
+
+{% block body %}
+    <h1>UserAccountCreation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Function</th>
+                <th>Name_society</th>
+                <th>Address_society</th>
+                <th>Phone_society</th>
+                <th>Coach_name</th>
+                <th>Coaching_beginning</th>
+                <th>Password</th>
+                <th>Confirm_password</th>
+                <th>Accept_terms</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user_account_creation in user_account_creations %}
+            <tr>
+                <td>{{ user_account_creation.id }}</td>
+                <td>{{ user_account_creation.name }}</td>
+                <td>{{ user_account_creation.surname }}</td>
+                <td>{{ user_account_creation.phone }}</td>
+                <td>{{ user_account_creation.email }}</td>
+                <td>{{ user_account_creation.function }}</td>
+                <td>{{ user_account_creation.nameSociety }}</td>
+                <td>{{ user_account_creation.addressSociety }}</td>
+                <td>{{ user_account_creation.phoneSociety }}</td>
+                <td>{{ user_account_creation.coachName }}</td>
+                <td>{{ user_account_creation.coachingBeginning ? user_account_creation.coachingBeginning|date('Y-m-d') : '' }}</td>
+                <td>{{ user_account_creation.password }}</td>
+                <td>{{ user_account_creation.confirmPassword }}</td>
+                <td>{{ user_account_creation.acceptTerms ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('user_account_creation_show', {'id': user_account_creation.id}) }}">show</a>
+                    <a href="{{ path('user_account_creation_edit', {'id': user_account_creation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="15">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_account_creation_new') }}">Create new</a>
+{% endblock %}

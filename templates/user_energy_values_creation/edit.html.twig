@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit UserEnergyValuesCreation{% endblock %}
+
+{% block body %}
+    <h1>Edit UserEnergyValuesCreation</h1>
+
+    {{ include('user_energy_values_creation/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('user_energy_values_creation_index') }}">back to list</a>
+
+    {{ include('user_energy_values_creation/_delete_form.html.twig') }}
+{% endblock %}

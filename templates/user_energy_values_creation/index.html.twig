@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserEnergyValuesCreation index{% endblock %}
+
+{% block body %}
+    <h1>UserEnergyValuesCreation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Strength_name</th>
+                <th>Actually_notation</th>
+                <th>Expected_notation</th>
+                <th>Action_one</th>
+                <th>Action_two</th>
+                <th>Action_three</th>
+                <th>Action_four</th>
+                <th>Action_five</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user_energy_values_creation in user_energy_values_creations %}
+            <tr>
+                <td>{{ user_energy_values_creation.id }}</td>
+                <td>{{ user_energy_values_creation.strengthName }}</td>
+                <td>{{ user_energy_values_creation.actuallyNotation }}</td>
+                <td>{{ user_energy_values_creation.expectedNotation }}</td>
+                <td>{{ user_energy_values_creation.actionOne }}</td>
+                <td>{{ user_energy_values_creation.actionTwo }}</td>
+                <td>{{ user_energy_values_creation.actionThree }}</td>
+                <td>{{ user_energy_values_creation.actionFour }}</td>
+                <td>{{ user_energy_values_creation.actionFive }}</td>
+                <td>
+                    <a href="{{ path('user_energy_values_creation_show', {'id': user_energy_values_creation.id}) }}">show</a>
+                    <a href="{{ path('user_energy_values_creation_edit', {'id': user_energy_values_creation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_energy_values_creation_new') }}">Create new</a>
+{% endblock %}
