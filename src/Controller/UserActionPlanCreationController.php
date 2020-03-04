@@ -20,13 +20,31 @@ use Symfony\Component\Serializer\SerializerInterface;
 class UserActionPlanCreationController extends AbstractController
 {
     /**
-     * @Route("/", name="user_action_plan_creation_index", methods={"GET"})
+     *
+     * @Route(
+     *     "/",
+     *     name="user_action_plan_creation_index",
+     *     methods={"GET"}
+     *     )
      */
-    public function index(UserActionPlanCreationRepository $userActionPlanCreationRepository): Response
+
+    public function index(UserActionPlanCreationRepository $actionPlanCreation
+    ): Response
     {
-        return $this->render('user_action_plan_creation/index.html.twig', [
-            'user_action_plan_creations' => $userActionPlanCreationRepository->findAll(),
-        ]);
+        $response = new Response();
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', '*');
+        try {
+            $actionPlanCreation = $this->getDoctrine()->getRepository(UserActionPlanCreation::class);
+            $results = $actionPlanCreation->findAll();
+            return $this->json($results, $status = 200, $headers = [], $context = []);
+        } catch (NotEncodableValueException $e) {
+            return $this->json([
+                'status' => 400,
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 
     /**
@@ -38,9 +56,8 @@ class UserActionPlanCreationController extends AbstractController
      * @return JsonResponse
      */
     public function create(Request $request,
-SerializerInterface $serializer,
-EntityManagerInterface $entityManager)
-    : JsonResponse
+                           SerializerInterface $serializer,
+                           EntityManagerInterface $entityManager): JsonResponse
     {
         try {
             $jsonRecu = $request->getContent();
@@ -59,15 +76,60 @@ EntityManagerInterface $entityManager)
 
     /**
      * @Route(
-     *     "show/{id}",
+     *     "/show",
      *      name="user_action_plan_creation_show",
-     *     methods={"GET"})
+     *     methods={"GET"}
+     *     )
+     *
      */
-    public function show(UserActionPlanCreation $userActionPlanCreation): Response
+    public function show(UserActionPlanCreationRepository $actionPlanCreationRepository
+    ): Response
+
     {
-        return $this->render('user_action_plan_creation/show.html.twig', [
-            'user_action_plan_creation' => $userActionPlanCreation,
-        ]);
+        $response = new Response();
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', '*');
+        try {
+            $actionPlanCreationRepository = $this->getDoctrine()->getRepository(UserActionPlanCreation::class);
+            $results = $actionPlanCreationRepository->findAll();
+            return $this->json($results, $status = 200, $headers = [], $context = []);
+        } catch (NotEncodableValueException $e) {
+            return $this->json([
+                'status' => 400,
+                'message' => $e->getMessage()
+            ], 400);
+        }
+    }
+
+    /**
+     * @Route(
+     *     "/show/{id}",
+     *      name="user_action_plan_creation_show",
+     *     methods={"GET"}
+     *     )
+     *
+     */
+    public function showOneAction(
+        UserActionPlanCreationRepository $actionPlanCreationRepository,
+        Request $request
+    ): Response
+
+    {
+        $response = new Response();
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', '*');
+        try {
+            $actionPlanCreationRepository = $this->getDoctrine()->getRepository(UserActionPlanCreation::class);
+            $results = $actionPlanCreationRepository->find($request->get('id'));
+            return $this->json($results, $status = 200, $headers = [], $context = []);
+        } catch (NotEncodableValueException $e) {
+            return $this->json([
+                'status' => 400,
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 
     /**
@@ -91,16 +153,31 @@ EntityManagerInterface $entityManager)
     }
 
     /**
-     * @Route("/{id}", name="user_action_plan_creation_delete", methods={"DELETE"})
+     * @Route(
+     *     "/delete/{id}",
+     *     name="user_action_plan_creation_delete",
+     *     methods={"DELETE"}
+     *     )
      */
-    public function delete(Request $request, UserActionPlanCreation $userActionPlanCreation): Response
+    public function delete(
+        Request $request,
+        UserActionPlanCreation $actionPlanCreation)
+    : Response
     {
-        if ($this->isCsrfTokenValid('delete'.$userActionPlanCreation->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($userActionPlanCreation);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('user_action_plan_creation_index');
+        if ($this->getDoctrine()->getRepository(UserActionPlanCreation::class)
+            ->find($request->get("id"))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($actionPlanCreation);
+            $entityManager->flush();
+
+            return $this->json([
+                'content' => 'action deleted',
+                'status' => 200]);
+        }
+        return $this->json([
+            'content' => 'Unauthorized Request',
+            'status' => 401,
+        ]);
     }
 }

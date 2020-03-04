@@ -20,13 +20,31 @@ use Symfony\Component\Serializer\SerializerInterface;
 class UserObjectiveCreationController extends AbstractController
 {
     /**
-     * @Route("/", name="user_objective_creation_index", methods={"GET"})
+     *
+     * @Route(
+     *     "/",
+     *     name="user_objective_creation_index",
+     *     methods={"GET"}
+     *     )
      */
-    public function index(UserObjectiveCreationRepository $userObjectiveCreationRepository): Response
+
+    public function index(UserObjectiveCreationRepository $objectiveRepository
+    ): Response
     {
-        return $this->render('user_objective_creation/index.html.twig', [
-            'user_objective_creations' => $userObjectiveCreationRepository->findAll(),
-        ]);
+        $response = new Response();
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', '*');
+        try {
+            $objectiveRepository = $this->getDoctrine()->getRepository(UserObjectiveCreation::class);
+            $results = $objectiveRepository->findAll();
+            return $this->json($results, $status = 200, $headers = [], $context = []);
+        } catch (NotEncodableValueException $e) {
+            return $this->json([
+                'status' => 400,
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 
     /**
@@ -60,13 +78,60 @@ class UserObjectiveCreationController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_objective_creation_show", methods={"GET"})
+     * @Route(
+     *     "/show",
+     *      name="user_objective_creation_show",
+     *     methods={"GET"}
+     *     )
+     *
      */
-    public function show(UserObjectiveCreation $userObjectiveCreation): Response
+    public function show(UserObjectiveCreationRepository $objectiveCreationRepository
+    ): Response
+
     {
-        return $this->render('user_objective_creation/show.html.twig', [
-            'user_objective_creation' => $userObjectiveCreation,
-        ]);
+        $response = new Response();
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', '*');
+        try {
+            $objectiveCreationRepository = $this->getDoctrine()->getRepository(UserObjectiveCreation::class);
+            $results = $objectiveCreationRepository->findAll();
+            return $this->json($results, $status = 200, $headers = [], $context = []);
+        } catch (NotEncodableValueException $e) {
+            return $this->json([
+                'status' => 400,
+                'message' => $e->getMessage()
+            ], 400);
+        }
+    }
+    /**
+     * @Route(
+     *     "/show/{id}",
+     *      name="user_objective_show_one",
+     *     methods={"GET"}
+     *     )
+     *
+     */
+    public function showOneObjective(
+        UserObjectiveCreationRepository $objectiveCreationRepository,
+                                     Request $request
+    ): Response
+
+    {
+        $response = new Response();
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', '*');
+        try {
+            $objectiveCreationRepository = $this->getDoctrine()->getRepository(UserObjectiveCreation::class);
+            $results = $objectiveCreationRepository->find($request->get('id'));
+            return $this->json($results, $status = 200, $headers = [], $context = []);
+        } catch (NotEncodableValueException $e) {
+            return $this->json([
+                'status' => 400,
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 
     /**
@@ -90,16 +155,29 @@ class UserObjectiveCreationController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_objective_creation_delete", methods={"DELETE"})
+     * @Route(
+     *     "/delete/{id}",
+     *     name="user_objective_creation_delete",
+     *     methods={"DELETE"}
+     *     )
      */
     public function delete(Request $request, UserObjectiveCreation $userObjectiveCreation): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$userObjectiveCreation->getId(), $request->request->get('_token'))) {
+
+        if ($this->getDoctrine()->getRepository(UserObjectiveCreation::class)
+            ->find($request->get("id"))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($userObjectiveCreation);
             $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('user_objective_creation_index');
+            return $this->json([
+                'content' => 'objective deleted',
+                'status' => 200]);
+        }
+        return $this->json([
+            'content' => 'Unauthorized Request',
+            'status' => 401,
+        ]) ;
+
     }
 }

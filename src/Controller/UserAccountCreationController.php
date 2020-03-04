@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -35,10 +36,7 @@ class UserAccountCreationController extends ApiController
      *     methods={"GET"}
      *     )
      */
-//    public function index (UserAccountCreationRepository $userAccountCreationRepository){
-//        $users = $userAccountCreationRepository->transformAll();
-//        return $this->respond($users);
-//    }
+
     public function index(UserAccountCreationRepository $user
     ): Response
     {
@@ -72,7 +70,8 @@ class UserAccountCreationController extends ApiController
     public function create(
         Request $request,
         SerializerInterface $serializer,
-        EntityManagerInterface $entityManager)
+        EntityManagerInterface $entityManager,
+UserPasswordEncoderInterface $encoder)
         : JsonResponse
     {
         try {
@@ -81,6 +80,8 @@ class UserAccountCreationController extends ApiController
                 $jsonRecu,
                 UserAccountCreation::class,
                 'json');
+            $post->setPassword($encoder->encodePassword($post,$post->getPassword()));
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($post);
             $entityManager->flush();
             return $this->json($post, 201, []);
@@ -122,7 +123,7 @@ class UserAccountCreationController extends ApiController
     /**
      * @Route(
      *     "/show/{id}",
-     *      name="user_account_creation_show",
+     *      name="user_account_creation_show_one",
      *     methods={"GET"}
      *     )
      *
@@ -223,31 +224,5 @@ class UserAccountCreationController extends ApiController
            'status' => 401,
        ]) ;
 
-
-
-//        $response = new JsonResponse(json_encode($userAccountCreation));
-//        $response->headers->set('Content-Type', 'application/json');
-//        $response->headers->set('Access-Control-Allow-Origin','*');
-//        $response->headers->set('Access-Control-Allow-Methods','GET,POST,PUT,DELETE,OPTIONS');
-//        $response->headers->set('Access-Control-Allow-Headers','*');
-//        try{
-//        if ($this->isCsrfTokenValid('delete'.$userAccountCreation->getId(),
-//            $request->request->get('_token'))) {
-//            $entityManager = $this->getDoctrine()->getManager();
-//            $entityManager->remove($userAccountCreation);
-//            $entityManager->flush();
-//        }
-//
-//        return $this;
-//    }
-//    catch(InvalidArgumentException $e){
-//        return $this->json([
-//            'content' => 'Unauthorized Request',
-//            'status' => 401,
-//            'message' => $e->getMessage(),
-//        ], 400
-//        );
-//    }
-
-}
+    }
 }

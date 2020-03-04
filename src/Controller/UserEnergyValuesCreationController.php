@@ -74,15 +74,61 @@ class UserEnergyValuesCreationController extends AbstractController
 
     /**
      * @Route(
-     *     "/{id}",
-     *     name="user_energy_values_creation_show",
-     *     methods={"GET"})
+     *     "/show",
+     *      name="user_energy_values_creation_show",
+     *     methods={"GET"}
+     *     )
+     *
      */
-    public function show(UserEnergyValuesCreation $userEnergyValuesCreation): Response
+    public function show(UserEnergyValuesCreationRepository $userEnergyValuesCreationRepository
+    ): Response
+
     {
-        return $this->render('user_energy_values_creation/show.html.twig', [
-            'user_energy_values_creation' => $userEnergyValuesCreation,
-        ]);
+        $response = new Response();
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', '*');
+        try {
+            $userEnergyValuesCreationRepository = $this
+                ->getDoctrine()
+                ->getRepository(UserEnergyValuesCreation::class);
+            $results = $userEnergyValuesCreationRepository->findAll();
+            return $this->json($results, $status = 200, $headers = [], $context = []);
+        } catch (NotEncodableValueException $e) {
+            return $this->json([
+                'status' => 400,
+                'message' => $e->getMessage()
+            ], 400);
+        }
+    }
+
+    /**
+     * @Route(
+     *     "/show/{id}",
+     *      name="user_energy_values_creation_show_one",
+     *     methods={"GET"}
+     *     )
+     *
+     */
+    public function showOneEnergyValue(UserEnergyValuesCreationRepository $userEnergyValuesCreationRepository,
+                                Request $request
+    ): Response
+
+    {
+        $response = new Response();
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', '*');
+        try {
+            $userEnergyValuesCreationRepository = $this->getDoctrine()->getRepository(UserEnergyValuesCreation::class);
+            $results = $userEnergyValuesCreationRepository->find($request->get('id'));
+            return $this->json($results, $status = 200, $headers = [], $context = []);
+        } catch (NotEncodableValueException $e) {
+            return $this->json([
+                'status' => 400,
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 
     /**
@@ -142,7 +188,7 @@ class UserEnergyValuesCreationController extends AbstractController
 
     /**
      * @Route(
-     *     "delete/{id}",
+     *     "/delete/{id}",
      *      name="user_energy_values_creation_delete",
      *     methods={"DELETE"})
      */
@@ -155,7 +201,7 @@ class UserEnergyValuesCreationController extends AbstractController
             $entityManager->flush();
 
             return $this->json([
-                'content' => 'user deleted',
+                'content' => 'value deleted',
                 'status' => 200]);
         }
         return $this->json([

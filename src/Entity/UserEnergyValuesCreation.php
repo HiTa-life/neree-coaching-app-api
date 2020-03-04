@@ -174,36 +174,36 @@ class UserEnergyValuesCreation
         return $this;
     }
 
-    /**
-     * @return Collection|UserObjectiveCreation[]
-     */
-    public function getTitleActionObjective(): Collection
-    {
-        return $this->title_action_objective;
-    }
+//    /**
+//     * @return Collection|UserObjectiveCreation[]
+//     */
+//    public function getTitleActionObjective(): Collection
+//    {
+//        return $this->title_action_objective;
+//    }
 
-    public function addTitleActionObjective(UserObjectiveCreation $titleActionObjective): self
-    {
-        if (!$this->title_action_objective->contains($titleActionObjective)) {
-            $this->title_action_objective[] = $titleActionObjective;
-            $titleActionObjective->setStrengthName($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTitleActionObjective(UserObjectiveCreation $titleActionObjective): self
-    {
-        if ($this->title_action_objective->contains($titleActionObjective)) {
-            $this->title_action_objective->removeElement($titleActionObjective);
-            // set the owning side to null (unless already changed)
-            if ($titleActionObjective->getStrengthName() === $this) {
-                $titleActionObjective->setStrengthName(null);
-            }
-        }
-
-        return $this;
-    }
+//    public function addTitleActionObjective(UserObjectiveCreation $titleActionObjective): self
+//    {
+//        if (!$this->title_action_objective->contains($titleActionObjective)) {
+//            $this->title_action_objective[] = $titleActionObjective;
+//            $titleActionObjective->setStrengthName($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeTitleActionObjective(UserObjectiveCreation $titleActionObjective): self
+//    {
+//        if ($this->title_action_objective->contains($titleActionObjective)) {
+//            $this->title_action_objective->removeElement($titleActionObjective);
+//            // set the owning side to null (unless already changed)
+//            if ($titleActionObjective->getStrengthName() === $this) {
+//                $titleActionObjective->setStrengthName(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
 
     public function getUserId(): ?UserAccountCreation
     {

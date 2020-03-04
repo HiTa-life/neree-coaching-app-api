@@ -330,36 +330,36 @@ class UserActionPlanCreation
         return $this;
     }
 
-    /**
-     * @return Collection|UserObjectiveCreation[]
-     */
-    public function getUserObjectiveCreations(): Collection
-    {
-        return $this->userObjectiveCreations;
-    }
-
-    public function addUserObjectiveCreation(UserObjectiveCreation $userObjectiveCreation): self
-    {
-        if (!$this->userObjectiveCreations->contains($userObjectiveCreation)) {
-            $this->userObjectiveCreations[] = $userObjectiveCreation;
-            $userObjectiveCreation->setTitleActionObjective($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserObjectiveCreation(UserObjectiveCreation $userObjectiveCreation): self
-    {
-        if ($this->userObjectiveCreations->contains($userObjectiveCreation)) {
-            $this->userObjectiveCreations->removeElement($userObjectiveCreation);
-            // set the owning side to null (unless already changed)
-            if ($userObjectiveCreation->getTitleActionObjective() === $this) {
-                $userObjectiveCreation->setTitleActionObjective(null);
-            }
-        }
-
-        return $this;
-    }
+//    /**
+//     * @return Collection|UserObjectiveCreation[]
+//     */
+//    public function getUserObjectiveCreations(): Collection
+//    {
+//        return $this->userObjectiveCreations;
+//    }
+//
+//    public function addUserObjectiveCreation(UserObjectiveCreation $userObjectiveCreation): self
+//    {
+//        if (!$this->userObjectiveCreations->contains($userObjectiveCreation)) {
+//            $this->userObjectiveCreations[] = $userObjectiveCreation;
+//            $userObjectiveCreation->setTitleAction($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeUserObjectiveCreation(UserObjectiveCreation $userObjectiveCreation): self
+//    {
+//        if ($this->userObjectiveCreations->contains($userObjectiveCreation)) {
+//            $this->userObjectiveCreations->removeElement($userObjectiveCreation);
+//            // set the owning side to null (unless already changed)
+//            if ($userObjectiveCreation->getTitleActionObjective() === $this) {
+//                $userObjectiveCreation->setTitleActionObjective(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
 
     public function getUserActionsId(): ?UserAccountCreation
     {
